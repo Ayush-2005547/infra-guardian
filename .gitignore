@@ -1,1 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 venv/
+.env
+
+# Docker
+grafana-storage/
+*.log
+
+# VSCode 
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,20 @@
+groups:
+  - name: instance-alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"
+          description: "{{ $labels.instance }} has been unreachable for more than 30 seconds."
+
+      - alert: HighCPUUsage
+        expr: rate(node_cpu_seconds_total{mode="system"}[1m]) > 0.8
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 80% for over 1 minute"
