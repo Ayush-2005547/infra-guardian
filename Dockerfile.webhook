@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /webhook_server
+
+# Install Ansible and SSH (required to run playbooks)
+RUN apt-get update && \
+    apt-get install -y ansible ssh && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file and install Python dependencies
+COPY requirements_webhook.txt .
+
+RUN pip install --no-cache-dir -r requirements_webhook.txt
+
+# Copy the webhook server script
+COPY webhook.py .
+
+EXPOSE 5001
+
+CMD ["python", "webhook.py"]

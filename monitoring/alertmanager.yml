@@ -1,7 +1,9 @@
 global: {}
 
 route:
-  receiver: 'noop'
+  receiver: 'webhook-receiver'
 
 receivers:
-  - name: 'noop'
+  - name: 'webhook-receiver'
+    webhook_configs:
+      - url: 'http://webhook_server:5001/alert'

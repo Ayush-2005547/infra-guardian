@@ -1,0 +1,6 @@
+---
+- name: Restart Flask app container
+  hosts: localhost
+  tasks:
+    - name: Restart app container
+      shell: docker restart infra-guardian-app-1

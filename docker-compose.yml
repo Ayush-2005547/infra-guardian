@@ -45,6 +45,18 @@ services:
     networks:
       - monitor-net
 
+  webhook_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.webhook
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/webhook_server  # 👈 Mount full project directory
+    networks:
+      - monitor-net
+
+
 volumes:
   grafana-storage:
 
