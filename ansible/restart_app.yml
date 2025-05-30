@@ -1,6 +1,10 @@
 ---
-- name: Restart Flask app container
+- name: Restart the Flask app Docker container
   hosts: localhost
+  become: false
   tasks:
-    - name: Restart app container
-      shell: docker restart infra-guardian-app-1
+    - name: Restart container named "infra-guardian-app-1"
+      community.docker.docker_container:
+        name: infra-guardian-app-1
+        state: started
+        restart: true

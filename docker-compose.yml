@@ -44,7 +44,7 @@ services:
       - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     networks:
       - monitor-net
-
+      
   webhook_server:
     build:
       context: .
@@ -52,9 +52,11 @@ services:
     ports:
       - "5001:5001"
     volumes:
-      - .:/webhook_server  # 👈 Mount full project directory
+      - ./ansible:/webhook_server/ansible
+      - /var/run/docker.sock:/var/run/docker.sock   # 🔥 This is key!
     networks:
       - monitor-net
+
 
 
 volumes:
