@@ -1,9 +1,16 @@
-global: {}
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'ayushahirwar1999@gmail.com'
+  smtp_auth_username: ayushahirwar1999@gmail.com
+  smtp_auth_password: ajmu drgf wefs wcjx  # Use an App Password if 2FA is enabled
+  smtp_require_tls: true
+
 
 route:
-  receiver: 'webhook-receiver'
+  receiver: 'gmail-notifications'
 
 receivers:
-  - name: 'webhook-receiver'
-    webhook_configs:
-      - url: 'http://webhook_server:5001/alert'
+  - name: 'gmail-notifications'
+    email_configs:
+      - to: ayushahirwar1999@gmail.com
+        send_resolved: true
