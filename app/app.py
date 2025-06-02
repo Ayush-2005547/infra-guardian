@@ -1,11 +1,35 @@
-# app/app.py
+#app.py
 from flask import Flask, jsonify, request
 from prometheus_client import Counter, Summary, generate_latest
 import logging
 import random
 import time
 
+# OpenTelemetry setup
+from opentelemetry import trace
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+
+trace.set_tracer_provider(
+    TracerProvider(
+        resource=Resource.create({"service.name": "flask-app"})
+    )
+)
+
+jaeger_exporter = JaegerExporter(
+    agent_host_name="jaeger",
+    agent_port=6831,
+)
+
+trace.get_tracer_provider().add_span_processor(
+    BatchSpanProcessor(jaeger_exporter)
+)
+
 app = Flask(__name__)
+FlaskInstrumentor().instrument_app(app)
 
 # Prometheus metrics
 REQUEST_COUNT = Counter('app_requests_total', 'Total app requests', ['method', 'endpoint'])

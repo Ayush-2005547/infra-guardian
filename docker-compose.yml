@@ -44,7 +44,7 @@ services:
       - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     networks:
       - monitor-net
-      
+
   webhook_server:
     build:
       context: .
@@ -53,11 +53,18 @@ services:
       - "5001:5001"
     volumes:
       - ./ansible:/webhook_server/ansible
-      - /var/run/docker.sock:/var/run/docker.sock   # 🔥 This is key!
+      - /var/run/docker.sock:/var/run/docker.sock   
     networks:
       - monitor-net
 
-
+  jaeger:
+    image: jaegertracing/all-in-one:1.54
+    ports:
+      - "16686:16686"      # Jaeger UI
+      - "6831:6831/udp"    # Jaeger Agent
+      - "14268:14268"      # Collector HTTP (for OTLP HTTP exporter)
+    networks:
+      - monitor-net
 
 volumes:
   grafana-storage:
