@@ -43,7 +43,7 @@ logging.basicConfig(level=logging.INFO)
 def hello():
     REQUEST_COUNT.labels(method='GET', endpoint='/').inc()
     app.logger.info("GET / - Hello World hit")
-    return "Hello from upgraded Flask app 🚀"
+    return "Hello from upgraded Flask app 🚀" 
 
 @app.route("/error")
 @REQUEST_LATENCY.labels(endpoint="/error").time()
@@ -51,7 +51,7 @@ def error_route():
     REQUEST_COUNT.labels(method='GET', endpoint='/error').inc()
     app.logger.warning("GET /error - Simulated error")
     if random.random() < 0.5:
-        raise Exception("Random internal server error")
+        raise Exception("Random internal server error") # Simulate a random error                                                                                                       
     return "No error this time."
 
 @app.route("/sleep")
@@ -61,11 +61,11 @@ def sleep_route():
     delay = random.uniform(0.5, 3.0)
     time.sleep(delay)
     app.logger.info(f"GET /sleep - Slept for {delay:.2f} seconds")
-    return jsonify({"slept_for": delay})
+    return jsonify({"slept_for": delay}) # Sleep route with random delay
 
 @app.route("/metrics")
 def metrics():
-    return generate_latest(), 200, {'Content-Type': 'text/plain; version=0.0.4; charset=utf-8'}
+    return generate_latest(), 200, {'Content-Type': 'text/plain; version=0.0.4; charset=utf-8'} # Prometheus metrics endpoint
 
 @app.errorhandler(Exception)
 def handle_error(e):
@@ -73,4 +73,4 @@ def handle_error(e):
     return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000) #Host the app on all interfaces
