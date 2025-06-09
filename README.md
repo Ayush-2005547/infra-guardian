@@ -61,8 +61,9 @@ infra-guardian/
 ├── Dockerfile.webhook       # For webhook container
 ├── docker-compose.yml
 ├── screenshots/
-│   └── grafana-dashboard.png
-│   └── firing.png
+│   ├── grafana-dashboard.png
+│   ├── setup observability.webp
+│   ├── firing.png
 │   └── resolved.png
 └── README.md
 ```
