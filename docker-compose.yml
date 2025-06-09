@@ -15,10 +15,6 @@ services:
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml
-       environment:
-      - SMTP_PASSWORD=${SMTP_PASSWORD}
-       env_file:
-      - .env
     networks:
       - monitor-net
 
@@ -46,6 +42,8 @@ services:
       - "9093:9093"
     volumes:
       - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+       environment:
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     networks:
       - monitor-net
 
