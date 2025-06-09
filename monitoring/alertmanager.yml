@@ -2,7 +2,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'ayushahirwar1999@gmail.com'
   smtp_auth_username: ayushahirwar1999@gmail.com
-  smtp_auth_password: {{ .SMTP_PASSWORD }}  # Use an App Password if 2FA is enabled
+  smtp_auth_password: '{{ .SMTP_PASSWORD }}'  # Use an App Password if 2FA is enabled
   smtp_require_tls: true
 
 
