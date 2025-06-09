@@ -69,25 +69,32 @@ services:
     image: grafana/loki:2.9.0
     ports:
       - "3100:3100"
+    command: -config.file=/etc/loki-config.yaml
     volumes:
-      - ./monitoring/loki-config.yaml:/mnt/config/loki-config.yaml
-    command: -config.file=/mnt/config/loki-config.yaml
+      - ./monitoring/loki-config.yaml:/etc/loki-config.yaml:ro
+      - loki_index:/loki/index
+      - loki_chunks:/loki/chunks
+      - loki_compactor:/loki/compactor
     networks:
       - monitor-net
 
   promtail:
     image: grafana/promtail:2.9.0
+    command: -config.file=/etc/promtail/config.yml
     volumes:
       - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
       - /var/log:/var/log
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock
-    command: -config.file=/etc/promtail/config.yml
     networks:
       - monitor-net
 
+
 volumes:
   grafana-storage:
+  loki_index:
+  loki_chunks:
+  loki_compactor:
 
 networks:
   monitor-net:

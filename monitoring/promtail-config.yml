@@ -1,4 +1,4 @@
-sserver:
+server:
   http_listen_port: 9080
   grpc_listen_port: 0
 
@@ -16,10 +16,10 @@ scrape_configs:
         labels:
           job: varlogs
           __path__: /var/log/*.log
-  - job_name: docker
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: docker
-          __path__: /var/lib/docker/containers/*/*.log
+  # - job_name: docker
+  #   static_configs:
+  #     - targets:
+  #         - localhost
+  #       labels:
+  #         job: docker
+  #         __path__: /var/lib/docker/containers/*/*.log
